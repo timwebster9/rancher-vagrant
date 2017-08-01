@@ -5,12 +5,17 @@ Vagrant.configure("2") do |config|
 
 	config.vm.box = "timwebster9/rhel73"
 	config.vm.network "private_network", ip: "192.168.56.10"
-	config.vm.hostname = "rhel"
+	config.vm.hostname = "enterpriselinux"
 
 	config.vm.provider "virtualbox" do |v|
 		  v.memory = 4096
 		  v.cpus = 2
 	end
+
+	config.vm.provision "shell", inline: "systemctl restart network"
+	config.vm.provision "shell", inline: "subscription-manager register --username <username> --password <password> --auto-attach"
+	config.vm.provision "shell", inline: "subscription-manager repos --enable rhel-server-rhscl-7-rpms"
+	config.vm.provision "shell", inline: "subscription-manager repos --enable rhel-7-server-optional-rpms"
 
 	config.vm.provision "ansible_local" do |ansible|
 		ansible.verbose = "v"
