@@ -1,0 +1,6 @@
+- name: add Mesos repository
+  yum:
+    name: http://repos.mesosphere.com/el/7/x86_64/RPMS/mesos-1.1.0-2.0.107.centos701406.x86_64.rpm
+    state: present
+
+
